@@ -7,7 +7,7 @@ export default function AppRoutes(props){
     return
     <Routes>
         <Route index element={<Homepage{...props}/>}/>
-        <Route path="login" element={LoginForm {...props}/>}/>
-        <Route path="bitcoin" element={BitcoinRates />} />
+        <Route path="login" element={<LoginForm {...props}/>}/>
+        <Route path="bitcoin" element={<BitcoinRates />} />
     </Routes>
 }
