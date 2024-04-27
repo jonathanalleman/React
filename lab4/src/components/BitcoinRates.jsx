@@ -1,21 +1,15 @@
 import { useState } from "react"; 
-import { useEffect } from "react";
+
+import { useData } from "../hooks/useData";
 
 const currencies = ['USD', 'AUD', 'NZD', 'GBP', 'EUR', 'SGD'];
 function BitcoinRates() {
 const [currency, setCurrency] = useState(currencies[0]);
-const [bitcoinRate, setBitCoinRate] = useState('')
 
-useEffect(()=> {
-fetch(`https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency}`)
-.then(response => response.json())
-.then(json => {
-    if(!ignore) setBitCoinRate(json.bitcoin[currency.toLowerCase()]);
-});
-return() => {
-    ignore=true;
-};
-}, [currency]);
+const data = useData(`https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency}`, currency)
+const btcPrice = data ? data.bitcoin[currency.toLowerCase()] : 0
+
+
 
 const options = currencies.map(curr => <option value={curr} key={curr}>{curr}</option>);
 return (
@@ -26,7 +20,7 @@ return (
 {options}
 </select>
 </label>
-<div><strong>Rate:</strong>{bitcoinRate||'Fetching...'}</div>
+<div> 1 BTC is worth {btcPrice} {currency} </div>
 </div>
 )
 }
